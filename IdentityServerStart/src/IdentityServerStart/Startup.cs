@@ -45,20 +45,22 @@ namespace Host
 
             app.UseDeveloperExceptionPage();
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationScheme = "Temp",
-                AutomaticAuthenticate = false,
-                AutomaticChallenge = false
-            });
+            #region patterns
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions
+            //{
+            //    AuthenticationScheme = "Temp",
+            //    AutomaticAuthenticate = false,
+            //    AutomaticChallenge = false
+            //});
 
-            app.UseGoogleAuthentication(new GoogleOptions
-            {
-                AuthenticationScheme = "Google",
-                SignInScheme = "Temp",
-                ClientId = "434483408261-55tc8n0cs4ff1fe21ea8df2o443v2iuc.apps.googleusercontent.com",
-                ClientSecret = "3gcoTrEDPPJ0ukn_aYYT6PWo"
-            });
+            //app.UseGoogleAuthentication(new GoogleOptions
+            //{
+            //    AuthenticationScheme = "Google",
+            //    SignInScheme = "Temp",
+            //    ClientId = "434483408261-55tc8n0cs4ff1fe21ea8df2o443v2iuc.apps.googleusercontent.com",
+            //    ClientSecret = "3gcoTrEDPPJ0ukn_aYYT6PWo"
+            //});
+            #endregion 
 
             app.UseIdentityServer();
 
