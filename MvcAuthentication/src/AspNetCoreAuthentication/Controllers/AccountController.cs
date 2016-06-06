@@ -24,10 +24,10 @@ namespace AspNetCoreAuthentication.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim("sub", "99udjj3899jjjj"),
+                    new Claim("sub", userName),
                     new Claim("name", "Brock"),
                     new Claim("locale", "simplified english"),
-                    new Claim("role", "Geek")
+                    new Claim("role", "Geek"),
                 };
 
                 var id = new ClaimsIdentity(claims, "password", "name", "role");
@@ -46,6 +46,11 @@ namespace AspNetCoreAuthentication.Controllers
         {
             await HttpContext.Authentication.SignOutAsync("Cookies");
             return Redirect("/");
+        }
+
+        public IActionResult forbidden()
+        {
+            return View();
         }
 
     }

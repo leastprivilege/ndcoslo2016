@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AspNetCoreAuthentication;
 
 namespace AspNetCoreAuthentication
 {
@@ -32,6 +34,26 @@ namespace AspNetCoreAuthentication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddTransient<IAuthorizationHandler, BeerHandler>();
+            services.AddTransient<UserRepository>();
+            services.AddTransient<IAuthorizationHandler, CustomerAuthorizationHandler>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("SeniorSales", builder =>
+                {
+                    builder.RequireAuthenticatedUser()
+                        .AddBeerRequirement("IPA")
+                        .RequireClaim("role", "Geek");
+                        //.RequireAssertion(context =>
+                        //{
+                        //    var ageValue = context.User.FindFirst("age")?.Value;
+                        //    var age = Int32.Parse(ageValue);
+                        //    return age >= 18 || context.User.HasClaim("age", "old");
+                        //});
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

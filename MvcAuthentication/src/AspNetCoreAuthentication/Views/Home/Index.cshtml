@@ -2,4 +2,12 @@
     ViewData["Title"] = "Home Page";
 }
 
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorization
+
 <h1>ASP.NET Core Authentication</h1>
+
+@if (await authorization.AuthorizeAsync(User, new Customer { Id=1 }, CustomerOperations.Edit))
+{
+    <a href="~/Home/EditCustomer?customerId=1">Edit Customer</a>
+}
