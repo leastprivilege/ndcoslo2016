@@ -10,6 +10,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AspNetCoreAuthentication;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace AspNetCoreAuthentication
 {
@@ -75,6 +77,48 @@ namespace AspNetCoreAuthentication
 
                 CookieName = "foo"
             });
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
+            {
+                AuthenticationScheme = "oidc",
+                SignInScheme = "Cookies",
+                Authority = "http://localhost:5000",
+                RequireHttpsMetadata = false,
+                ClientId = "mvc",
+                ResponseType = "id_token",
+                Scope = {"openid", "profile"},
+                Events = new OpenIdConnectEvents
+                {
+                    OnTicketReceived = n =>
+                    {
+                        var ci = new ClaimsIdentity(
+                            n.Principal.Claims.Where(x => x.Type == "sub"),
+                            "external", "name", "role");
+                        var cp = new ClaimsPrincipal(ci);
+
+                        n.Principal = cp;
+
+                        return Task.CompletedTask;
+                    }
+                }
+            });
+
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions
+            //{
+            //    AuthenticationScheme = "Temp",
+            //    AutomaticAuthenticate = false
+            //});
+
+            //app.UseGoogleAuthentication(new GoogleOptions
+            //{
+            //    AuthenticationScheme = "Google",
+            //    SignInScheme = "Temp",
+
+            //    ClientId = "998042782978-2moehouvbskg2e0ms04pgeqbj7n545h4.apps.googleusercontent.com",
+            //    ClientSecret = "-3HkpRE3rATPUp_-Vag7WeoI"
+            //});
 
             app.UseClaimsTransformation(ctx =>
             {

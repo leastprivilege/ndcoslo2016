@@ -9,7 +9,8 @@ namespace Host.Configuration
         {
             return new List<Scope>
             {
-                
+                StandardScopes.OpenId,
+                StandardScopes.Profile
             };
         }
     }
