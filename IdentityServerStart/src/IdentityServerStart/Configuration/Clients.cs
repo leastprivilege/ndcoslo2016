@@ -12,6 +12,24 @@ namespace Host.Configuration
             {
                 new Client
                 {
+                    ClientId = "spa",
+                    RedirectUris = new List<string>
+                    {
+                        "http://localhost:51961/index.html"
+                    },
+                    // yolo
+                    AllowAccessToAllScopes = true,
+                    AllowAccessTokensViaBrowser = true,
+                    AccessTokenType = AccessTokenType.Reference,
+
+                    AllowedCorsOrigins = new List<string>
+                    {
+                        "http://localhost:51961"
+                    }
+                },
+
+                new Client
+                {
                     ClientId = "mvc",
                     ClientName = "MVC Application",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,

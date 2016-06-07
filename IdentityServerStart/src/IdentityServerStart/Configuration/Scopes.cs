@@ -21,7 +21,13 @@ namespace Host.Configuration
                     {
                         new ScopeClaim("role"),
                         new ScopeClaim("email"),
-                    }
+                    },
+                    ScopeSecrets = new List<Secret>
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowUnrestrictedIntrospection = true,
+
                 }
             };
         }

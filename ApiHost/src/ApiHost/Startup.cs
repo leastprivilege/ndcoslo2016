@@ -16,6 +16,8 @@ namespace ApiHost
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
+
             services.AddMvcCore(options =>
             {
                 //var p = new AuthorizationPolicyBuilder()
@@ -38,13 +40,25 @@ namespace ApiHost
             //    Audience = "http://localhost:5000/resources"
             //});
 
+            app.UseCors(policy =>
+            {
+                policy.WithOrigins("http://localhost:51961");
+
+                policy.AllowAnyHeader();
+                policy.AllowAnyMethod();
+            });
+
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {
                 Authority = "http://localhost:5000",
                 RequireHttpsMetadata = false,
+                
                 ScopeName = "api1",
+                // for introspection
+                ScopeSecret = "secret",
+
                 AdditionalScopes = new string[] { "api1.readonly" },
                 AutomaticAuthenticate = true
             });
