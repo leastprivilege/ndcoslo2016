@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>API Result</h1>
+<pre id="foo">@ViewData["data"]</pre>
+<script>
+    var json = document.getElementById("foo").innerText;
+    document.getElementById("foo").innerText = JSON.stringify(JSON.parse(json), null, 2);
+</script>

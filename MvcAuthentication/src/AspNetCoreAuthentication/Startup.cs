@@ -91,17 +91,17 @@ namespace AspNetCoreAuthentication
                 Scope = {"openid", "profile"},
                 Events = new OpenIdConnectEvents
                 {
-                    OnTicketReceived = n =>
-                    {
-                        var ci = new ClaimsIdentity(
-                            n.Principal.Claims.Where(x => x.Type == "sub"),
-                            "external", "name", "role");
-                        var cp = new ClaimsPrincipal(ci);
+                    //OnTicketReceived = n =>
+                    //{
+                    //    var ci = new ClaimsIdentity(
+                    //        n.Principal.Claims.Where(x => x.Type == "sub"),
+                    //        "external", "name", "role");
+                    //    var cp = new ClaimsPrincipal(ci);
 
-                        n.Principal = cp;
+                    //    n.Principal = cp;
 
-                        return Task.CompletedTask;
-                    }
+                    //    return Task.CompletedTask;
+                    //}
                 }
             });
 

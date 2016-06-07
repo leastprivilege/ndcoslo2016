@@ -10,7 +10,13 @@ namespace Host.Configuration
             return new List<Scope>
             {
                 StandardScopes.OpenId,
-                StandardScopes.Profile
+                StandardScopes.Profile,
+                new Scope
+                {
+                    Name = "api1",
+                    DisplayName = "Your API 1",
+                    Type = ScopeType.Resource
+                }
             };
         }
     }
