@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Host.Configuration
@@ -13,7 +14,8 @@ namespace Host.Configuration
                 {
                     ClientId = "mvc",
                     ClientName = "MVC Application",
-                    AllowedGrantTypes = GrantTypes.ImplicitAndClientCredentials,
+                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                    AllowAccessTokensViaBrowser = false,
                     ClientSecrets = new List<Secret>
                     {
                         new Secret("secret".Sha256()),
@@ -32,8 +34,13 @@ namespace Host.Configuration
                     {
                         StandardScopes.OpenId.Name,
                         StandardScopes.Profile.Name,
+                        StandardScopes.OfflineAccess.Name,
                         "api1"
                     },
+                    //AccessTokenLifetime = 3600, // seconds
+                    //RefreshTokenUsage = TokenUsage.ReUse,
+                    //UpdateAccessTokenClaimsOnRefresh = true,
+                    //RefreshTokenExpiration = TimeSpan.FromDays(30),
                 }
             };
         }

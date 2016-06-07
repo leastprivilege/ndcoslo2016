@@ -87,8 +87,11 @@ namespace AspNetCoreAuthentication
                 Authority = "http://localhost:5000",
                 RequireHttpsMetadata = false,
                 ClientId = "mvc",
-                ResponseType = "id_token",
-                Scope = {"openid", "profile"},
+                ClientSecret = "secret",
+                ResponseType = "code id_token",
+                Scope = {"openid", "profile", "api1", "offline_access"},
+                GetClaimsFromUserInfoEndpoint = true,
+                SaveTokens = true, // stores tokens in cookie properties
                 Events = new OpenIdConnectEvents
                 {
                     //OnTicketReceived = n =>

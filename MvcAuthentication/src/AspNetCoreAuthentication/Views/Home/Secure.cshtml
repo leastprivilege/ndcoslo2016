@@ -1,7 +1,9 @@
-﻿<h2>Secure</h2>
+﻿@using Microsoft.AspNetCore.Authentication
+<h2>Secure</h2>
 
 <div>
     <a class="btn btn-primary" asp-action="CallApi">Call Api (server-to-server)</a>
+    <a class="btn btn-primary" asp-action="CallApiAsUser">Call Api (as user)</a>
 </div>
 
 <dl>
@@ -10,4 +12,15 @@
         <dt>@claim.Type</dt>
         <dd>@claim.Value</dd>
     }
+
+    <dt>Access Token</dt>
+    <dd>
+        @await ViewContext.HttpContext.Authentication.GetTokenAsync("access_token")
+    <dt>Id Token</dt>
+    <dd>
+        @await ViewContext.HttpContext.Authentication.GetTokenAsync("id_token")
+    <dt>Refresh Token</dt>
+    <dd>
+        @await ViewContext.HttpContext.Authentication.GetTokenAsync("refresh_token")
+    </dd>
 </dl>

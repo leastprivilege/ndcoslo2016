@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -52,6 +53,18 @@ namespace AspNetCoreAuthentication.Controllers
             // ok, do real work now...
 
             return View();
+        }
+
+        public async Task<IActionResult> CallApiAsUser()
+        {
+            var access_token = await HttpContext.Authentication.GetTokenAsync("access_token");
+
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", access_token);
+            var data = await client.GetStringAsync("http://localhost:48791/test");
+
+            ViewData["data"] = data;
+            return View("ApiResult");
         }
 
         public async Task<IActionResult> CallApi()

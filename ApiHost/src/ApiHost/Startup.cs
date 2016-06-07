@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ApiHost
 {
@@ -36,6 +37,8 @@ namespace ApiHost
             //    AutomaticAuthenticate = true,
             //    Audience = "http://localhost:5000/resources"
             //});
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
             {

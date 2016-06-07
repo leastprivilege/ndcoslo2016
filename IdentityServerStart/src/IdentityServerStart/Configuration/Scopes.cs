@@ -11,11 +11,17 @@ namespace Host.Configuration
             {
                 StandardScopes.OpenId,
                 StandardScopes.Profile,
+                StandardScopes.OfflineAccess,
                 new Scope
                 {
                     Name = "api1",
                     DisplayName = "Your API 1",
-                    Type = ScopeType.Resource
+                    Type = ScopeType.Resource,
+                    Claims = new List<ScopeClaim>
+                    {
+                        new ScopeClaim("role"),
+                        new ScopeClaim("email"),
+                    }
                 }
             };
         }
